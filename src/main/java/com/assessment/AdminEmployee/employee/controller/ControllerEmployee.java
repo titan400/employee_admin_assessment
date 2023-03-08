@@ -32,15 +32,17 @@ public class ControllerEmployee {
         return modelEmployee;
     }
     @RequestMapping(value = "/updateEmployeeById/{id}", method = RequestMethod.PUT)
-    public ModelEmployee updateEmployeeById(@PathVariable("id") int id, @RequestBody ModelEmployee emloyeeDetails) throws  EmployeeException, EmailException {
+    public ModelEmployee updateEmployeeById(@PathVariable("id") int id, @RequestBody ModelEmployee emloyeeDetails) throws  EmployeeException,EmailException {
         Optional<ModelEmployee> modelEmployee=serviceEmployee.getEmployeeModelById(id);
         if(modelEmployee.isEmpty())
         {
-            throw  new EmployeeException("can not update user does not exsits");
+            throw  new EmployeeException("can not update user does not exists");
         }
-        if(emloyeeDetails.getEmail().contains("@"))
-            throw new EmailException("Cant change the email");
+        if(emloyeeDetails.getEmail()==null)
+            return serviceEmployee.updateEmployee(id, emloyeeDetails);
 
+        if(emloyeeDetails.getEmail().contains("@"))
+            throw new EmailException("Cant change the email enter again for changing the name only");
         return serviceEmployee.updateEmployee(id, emloyeeDetails);
     }
     @RequestMapping(value = "/deleteAllRecord", method = RequestMethod.DELETE)

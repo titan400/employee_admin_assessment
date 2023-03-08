@@ -43,7 +43,8 @@ public class ServiceEmployee {
         Optional<ModelEmployee> employee= repositoryEmployee.findById(id);
         ModelEmployee new_employee = employee.get();
         new_employee.setName(employeeDetails.getName());
-        new_employee.setEmail(employeeDetails.getEmail());
+        //new_employee.setEmail(employeeDetails.getEmail());
         return repositoryEmployee.save(new_employee);
     }
+
 }
